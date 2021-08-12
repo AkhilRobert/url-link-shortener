@@ -1,24 +1,38 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Shrink Url</title>
-</head>
-<body>
-{% if messages %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
+    <title>Shrink Url</title>
+  </head>
+  <body>
+    <main class="main">
+    <h1 class="main__heading">Shorten URL</h1>
+      <form method="POST" class="form">
+        {% csrf_token %}
+        <input name="original_url" type="text" class="form__input" />
+        <button class="form__button">Shorten It!</button>
+      </form>
+      {% if messages %}
+        {% for message in messages %} 
+        
+          {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <div class="main__alert main__alert--error">
+              <p class="main__link main__link--error">{{message}}</p>
+            </div>
+            {% endif %}
 
-  {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="main__alert main__alert--success">
+              <a href="{{ message }}" class="main__link">{{message}}</a>
+            </div>
+            {% endif %}
 
-    <p>{{ message }}</p>
-
-  {% endfor %} {% endif %}
-<form method="post">
-  {% csrf_token %}
-  {{ form }}
-  <button>Submit</button>
-</form>
-
-</body>
+        {% endfor %} 
+      {% endif %}
+    </main>
+  </body>
 </html>

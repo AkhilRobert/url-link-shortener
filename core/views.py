@@ -14,7 +14,8 @@ class HomeView(View):
         form = ShrinkURLForm(request.POST)
         if form.is_valid():
             val = form.save()
-            messages.success(request, val.shrink_id)
+            messages.success(
+                request, f"http://{request.get_host()}/{val.shrink_id}")
         else:
             messages.error(request, "Invalid URL")
         return redirect(reverse("home"))

@@ -21,7 +21,7 @@ class ShrinkURLForm(forms.ModelForm):
         valid = re.match(
             "((http|https)://)(www.)?[a-zA-Z0-9@:%._\\+~#?&//=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%._\\+~#?&//=]*)", original_url)
 
-        if not valid:
+        if not bool(valid):
             raise forms.ValidationError("Invalid URL")
 
         return original_url
